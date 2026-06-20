@@ -14,7 +14,7 @@ object MyTikFinityHttpClient : ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("[MyTfHttp] Load onInitialize")
+		LOGGER.info("Load initialize")
 	}
 
 	fun id(path: String): Identifier
