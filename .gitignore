@@ -40,4 +40,5 @@ replay_*.log
 *.jfr
 
 AGENTS.md
-/.agents/
+.agents/
+.kotlin/
