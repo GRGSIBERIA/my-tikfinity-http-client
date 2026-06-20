@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "template-mod",
+	"id": "my-tikfinity-http-client",
 	"version": "${version}",
-	"name": "Template Mod",
+	"name": "My TikFinity Http Client",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
 		"Me!"
@@ -12,32 +12,32 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/template-mod/icon.png",
+	"icon": "assets/my-tikfinity-http-client/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			{
-				"value": "com.mytk.TemplateMod",
+				"value": "com.mytk.MyTikFinityHttpClient",
 				"adapter": "kotlin"
 			}
 		],
 		"client": [
 			{
-				"value": "com.mytk.client.TemplateModClient",
+				"value": "com.mytk.client.MyTikFinityHttpClientClient",
 				"adapter": "kotlin"
 			}
 		],
 		"fabric-datagen": [
 			{
-				"value": "com.mytk.client.TemplateModDataGenerator",
+				"value": "com.mytk.client.MyTikFinityHttpClientDataGenerator",
 				"adapter": "kotlin"
 			}
 		]
 	},
 	"mixins": [
-		"template-mod.mixins.json",
+		"my-tikfinity-http-client.mixins.json",
 		{
-			"config": "template-mod.client.mixins.json",
+			"config": "my-tikfinity-http-client.client.mixins.json",
 			"environment": "client"
 		}
 	],

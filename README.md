@@ -1,4 +1,4 @@
-# Template Mod
+# My TikFinity Http Client
 
 ## Setup
 

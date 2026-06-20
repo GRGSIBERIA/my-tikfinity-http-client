@@ -1,9 +1,9 @@
-package com.example.client
+package com.mytk.client
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 
-object TemplateModDataGenerator : DataGeneratorEntrypoint {
+object MyTikFinityHttpClientDataGenerator : DataGeneratorEntrypoint {
 	override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
 	}
 }

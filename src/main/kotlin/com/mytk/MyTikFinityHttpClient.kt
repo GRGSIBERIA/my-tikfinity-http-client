@@ -4,8 +4,8 @@ import net.fabricmc.api.ModInitializer
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 
-object TemplateMod : ModInitializer {
-	const val MOD_ID: String = "template-mod"
+object MyTikFinityHttpClient : ModInitializer {
+	const val MOD_ID: String = "my-tikfinity-http-client"
 
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 

@@ -21,7 +21,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		register("template-mod") {
+		register("my-tikfinity-http-client") {
 			sourceSet(sourceSets.main.get())
 			sourceSet(sourceSets.getByName("client"))
 		}

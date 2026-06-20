@@ -14,4 +14,4 @@ pluginManagement {
 }
 
 // Should match your modid
-rootProject.name = "template-mod"
+rootProject.name = "my-tikfinity-http-client"
