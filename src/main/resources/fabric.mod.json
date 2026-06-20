@@ -17,19 +17,19 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "com.example.TemplateMod",
+				"value": "com.mytk.TemplateMod",
 				"adapter": "kotlin"
 			}
 		],
 		"client": [
 			{
-				"value": "com.example.client.TemplateModClient",
+				"value": "com.mytk.client.TemplateModClient",
 				"adapter": "kotlin"
 			}
 		],
 		"fabric-datagen": [
 			{
-				"value": "com.example.client.TemplateModDataGenerator",
+				"value": "com.mytk.client.TemplateModDataGenerator",
 				"adapter": "kotlin"
 			}
 		]
