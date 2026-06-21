@@ -3,9 +3,7 @@ package com.mytk.client
 import org.slf4j.LoggerFactory
 import com.mytk.client.VoiceAPI
 
-data class TriggerEvent(
-	val context: TikFinityContext,
-) {
+class TriggerEvent {
 	companion object {
 		private const val MOD_ID: String = "my-tikfinity-http-client"
 		private val LOGGER = LoggerFactory.getLogger(MOD_ID)
@@ -14,24 +12,29 @@ data class TriggerEvent(
 		private const val FURINA_STYLE_NAME = "furina"
 	}
 
-	val type: Type = Type.fromId(context.triggerTypeId)
-	private val nahidaModelId: Int = -1
-	private val furinaModelId: Int = -1
+	private val voice = VoiceAPI()
+	private val nahidaModelId = getModelId(NAHIDA_STYLE_NAME)
+	private val furinaModelId = getModelId(FURINA_STYLE_NAME)
 	
-	operator fun invoke() {
-		when (type) {
+	operator fun invoke(context: TikFinityContext) {
+		when (Type.fromId(context.triggerTypeId)) {
 			Type.SHARE -> onShare()
 			Type.COMMAND -> onCommand()
 			Type.GIFT_MINIMUM_COINS -> onGiftMinimumCoins()
 			Type.GIFT_SPECIFIC -> onGiftSpecific()
 			Type.JOIN -> onJoin()
-			Type.LIKES -> onLikes()
-			Type.FOLLOW -> onFollow()
-			Type.SUBSCRIBE -> onSubscribe()
-			Type.CHAT -> onChat()
+			Type.LIKES -> onLikes(context)
+			Type.FOLLOW -> onFollow(context)
+			Type.SUBSCRIBE -> onSubscribe(context)
+			Type.CHAT -> onChat(context)
 			Type.EMOTE -> onEmote()
 			Type.FIRST_USER_ACTIVITY -> onFirstUserActivity()
 		}
+	}
+	
+	private fun getModelId(styleName: String) : Int {
+		val js = voice.getModelsJson()
+		return voice.getModelId(js, styleName)
 	}
 
 	private fun onShare() {
@@ -54,28 +57,26 @@ data class TriggerEvent(
 		LOGGER.info("Trigger event: {}", Type.JOIN.name)
 	}
 
-	private fun onLikes() {
+	private fun onLikes(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.LIKES.name)
 		LOGGER.info("{}: {}", context.nickname, context.repeatCount)
 	}
 
-	private fun onFollow() {
+	private fun onFollow(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.FOLLOW.name)
 		LOGGER.info("Followed: {}", context.nickname)
 	}
 
-	private fun onSubscribe() {
+	private fun onSubscribe(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.SUBSCRIBE.name)
 		LOGGER.info("Subscribed: {}", context.nickname)
 	}
 
-	private fun onChat() {
+	private fun onChat(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.CHAT.name)
 		LOGGER.info("{}: {}", context.nickname, context.commandParams)
 		
-		val voice = VoiceAPI()
-		val js = voice.getModelsJson()
-		val modelId = voice.getModelId(js, "nahida")
+		
 	}
 
 	private fun onEmote() {
