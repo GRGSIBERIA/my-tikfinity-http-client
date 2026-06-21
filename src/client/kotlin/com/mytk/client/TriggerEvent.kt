@@ -39,6 +39,7 @@ class TriggerEvent {
 
 	private fun onShare(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.SHARE.name)
+		LOGGER.info("Share: {}", context.nickname)
 	}
 
 	private fun onCommand(context: TikFinityContext) {
@@ -47,44 +48,47 @@ class TriggerEvent {
 
 	private fun onGiftMinimumCoins(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.GIFT_MINIMUM_COINS.name)
+		LOGGER.info("Gift: {} = {} * {}", context.nickname, context.giftName, context.repeatCount)
 	}
 
 	private fun onGiftSpecific(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.GIFT_SPECIFIC.name)
+		LOGGER.info("GiftSpecific: {} = {} * {}", context.nickname, context.giftName, context.repeatCount)
 	}
 
 	private fun onJoin(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.JOIN.name)
+		LOGGER.info("Join: {}", context.nickname)
 	}
 
 	private fun onLikes(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.LIKES.name)
-		LOGGER.info("{}: {}", context.nickname, context.repeatCount)
+		LOGGER.info("Likes {}: {}", context.nickname, context.repeatCount)
 	}
 
 	private fun onFollow(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.FOLLOW.name)
-		LOGGER.info("Followed: {}", context.nickname)
+		LOGGER.info("Follow: {}", context.nickname)
 	}
 
 	private fun onSubscribe(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.SUBSCRIBE.name)
-		LOGGER.info("Subscribed: {}", context.nickname)
+		LOGGER.info("Subscribe: {}", context.nickname)
 	}
 
 	private fun onChat(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.CHAT.name)
-		LOGGER.info("{}: {}", context.nickname, context.commandParams)
-		
-		
+		LOGGER.info("Chat {}: {}", context.nickname, context.commandParams)
 	}
 
 	private fun onEmote(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.EMOTE.name)
+		LOGGER.info("Emote {}: {}", context.nickname, context.commandParams)
 	}
 
 	private fun onFirstUserActivity(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.FIRST_USER_ACTIVITY.name)
+		LOGGER.info("First User Activity {}: {}", context.nickname, context.commandParams)
 	}
 
 	enum class Type(val id: Int) {
