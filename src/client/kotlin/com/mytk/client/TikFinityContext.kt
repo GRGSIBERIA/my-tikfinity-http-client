@@ -1,4 +1,4 @@
-package com.mytk
+package com.mytk.client
 
 data class TikFinityContext(
 	val userId: String,

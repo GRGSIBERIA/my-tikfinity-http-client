@@ -6,7 +6,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 import java.net.InetSocketAddress
-
+import com.mytk.client.TikFinityClient
 
 object MyTikFinityHttpClientClient : ClientModInitializer {
 	const val MOD_ID: String = "my-tikfinity-http-client"
@@ -14,9 +14,10 @@ object MyTikFinityHttpClientClient : ClientModInitializer {
 	private const val ACTION_EXEC_PATH = "/api/features/actions/exec"
 
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
+	private val httpClient = TikFinityClient()
 	
 	override fun onInitializeClient() {
-		
+		httpClient.startHttpServer()
 	}
 	
 	fun id(path: String): Identifier

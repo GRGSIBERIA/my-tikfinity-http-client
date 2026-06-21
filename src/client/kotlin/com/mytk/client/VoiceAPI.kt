@@ -1,4 +1,4 @@
-package com.mytk
+package com.mytk.client
 
 class VoiceAPI() {
 	fun playText(

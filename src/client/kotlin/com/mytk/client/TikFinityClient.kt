@@ -1,4 +1,4 @@
-package com.mytk
+package com.mytk.client
 
 import com.google.gson.Gson
 import com.google.gson.JsonParser
