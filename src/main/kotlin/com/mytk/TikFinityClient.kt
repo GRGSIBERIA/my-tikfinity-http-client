@@ -1,11 +1,12 @@
 package com.mytk
 
+import com.google.gson.Gson
+import com.google.gson.JsonParser
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
-import net.fabricmc.api.ClientModInitializer
-import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 import java.net.InetSocketAddress
+import java.nio.charset.StandardCharsets
 
 class TikFinityClient {
     
@@ -15,6 +16,7 @@ class TikFinityClient {
         private const val ACTION_EXEC_PATH = "/api/features/actions/exec"
 
         private val LOGGER = LoggerFactory.getLogger(MOD_ID)
+        private val GSON = Gson()
     }
 
 	
@@ -57,6 +59,24 @@ class TikFinityClient {
 			return
 		}
 
+		val tikFinityContext = runCatching {
+			val requestBody = exchange.requestBody
+				.bufferedReader(StandardCharsets.UTF_8)
+				.use { it.readText() }
+			val contextJson = JsonParser.parseString(requestBody)
+				.asJsonObject
+				.getAsJsonObject("context")
+				?: error("Request body does not contain context")
+
+			GSON.fromJson(contextJson, TikFinityContext::class.java)
+		}.getOrElse { exception ->
+			LOGGER.warn("Invalid TikFinity request body", exception)
+			exchange.sendResponseHeaders(400, -1)
+			exchange.close()
+			return
+		}
+
+		LOGGER.info("Received TikFinity context: {}", tikFinityContext)
 		exchange.sendResponseHeaders(200, -1)
 		exchange.close()
 	}
