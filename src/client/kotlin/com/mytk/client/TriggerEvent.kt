@@ -18,17 +18,17 @@ class TriggerEvent {
 	
 	operator fun invoke(context: TikFinityContext) {
 		when (Type.fromId(context.triggerTypeId)) {
-			Type.SHARE -> onShare()
-			Type.COMMAND -> onCommand()
-			Type.GIFT_MINIMUM_COINS -> onGiftMinimumCoins()
-			Type.GIFT_SPECIFIC -> onGiftSpecific()
-			Type.JOIN -> onJoin()
+			Type.SHARE -> onShare(context)
+			Type.COMMAND -> onCommand(context)
+			Type.GIFT_MINIMUM_COINS -> onGiftMinimumCoins(context)
+			Type.GIFT_SPECIFIC -> onGiftSpecific(context)
+			Type.JOIN -> onJoin(context)
 			Type.LIKES -> onLikes(context)
 			Type.FOLLOW -> onFollow(context)
 			Type.SUBSCRIBE -> onSubscribe(context)
 			Type.CHAT -> onChat(context)
-			Type.EMOTE -> onEmote()
-			Type.FIRST_USER_ACTIVITY -> onFirstUserActivity()
+			Type.EMOTE -> onEmote(context)
+			Type.FIRST_USER_ACTIVITY -> onFirstUserActivity(context)
 		}
 	}
 	
@@ -37,23 +37,23 @@ class TriggerEvent {
 		return voice.getModelId(js, styleName)
 	}
 
-	private fun onShare() {
+	private fun onShare(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.SHARE.name)
 	}
 
-	private fun onCommand() {
+	private fun onCommand(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.COMMAND.name)
 	}
 
-	private fun onGiftMinimumCoins() {
+	private fun onGiftMinimumCoins(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.GIFT_MINIMUM_COINS.name)
 	}
 
-	private fun onGiftSpecific() {
+	private fun onGiftSpecific(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.GIFT_SPECIFIC.name)
 	}
 
-	private fun onJoin() {
+	private fun onJoin(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.JOIN.name)
 	}
 
@@ -79,11 +79,11 @@ class TriggerEvent {
 		
 	}
 
-	private fun onEmote() {
+	private fun onEmote(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.EMOTE.name)
 	}
 
-	private fun onFirstUserActivity() {
+	private fun onFirstUserActivity(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.FIRST_USER_ACTIVITY.name)
 	}
 
