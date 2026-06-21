@@ -59,7 +59,7 @@ class TikFinityClient {
 			return
 		}
 
-		val tikFinityContext = runCatching {
+		val triggerEvent = runCatching {
 			val requestBody = exchange.requestBody
 				.bufferedReader(StandardCharsets.UTF_8)
 				.use { it.readText() }
@@ -68,7 +68,8 @@ class TikFinityClient {
 				.getAsJsonObject("context")
 				?: error("Request body does not contain context")
 
-			GSON.fromJson(contextJson, TikFinityContext::class.java)
+			val tikFinityContext = GSON.fromJson(contextJson, TikFinityContext::class.java)
+			TriggerEvent(tikFinityContext)
 		}.getOrElse { exception ->
 			LOGGER.warn("Invalid TikFinity request body", exception)
 			exchange.sendResponseHeaders(400, -1)
@@ -76,7 +77,7 @@ class TikFinityClient {
 			return
 		}
 
-		LOGGER.info("Received TikFinity context: {}", tikFinityContext)
+		triggerEvent()
 		exchange.sendResponseHeaders(200, -1)
 		exchange.close()
 	}
