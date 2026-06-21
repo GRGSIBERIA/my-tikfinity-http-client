@@ -10,6 +10,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
 import javax.sound.sampled.FloatControl
@@ -26,6 +27,11 @@ class VoiceAPI {
 	}
 
 	private val httpClient = HttpClient.newHttpClient()
+	private val playbackExecutor = Executors.newSingleThreadExecutor { task ->
+		Thread(task, "$MOD_ID-voice-playback").apply {
+			isDaemon = true
+		}
+	}
 
 	fun getModelsJson(): JsonObject {
 		val request = HttpRequest.newBuilder()
@@ -60,7 +66,22 @@ class VoiceAPI {
 		volume: Double = 1.0,
 	) {
 		require(volume >= 0.0) { "Volume must be greater than or equal to 0" }
+		playbackExecutor.execute {
+			try {
+				requestAndPlayText(text, styleName, modelId, weight, volume)
+			} catch (e: Exception) {
+				LOGGER.error("Failed to request and play audio", e)
+			}
+		}
+	}
 
+	private fun requestAndPlayText(
+		text: String,
+		styleName: String,
+		modelId: Int,
+		weight: Double,
+		volume: Double,
+	) {
 		val query = listOf(
 			"text" to text,
 			"model_id" to modelId.toString(),
