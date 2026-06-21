@@ -9,7 +9,6 @@ import java.net.InetSocketAddress
 
 object MyTikFinityHttpClient : ModInitializer {
 	const val MOD_ID: String = "my-tikfinity-http-client"
-
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 
 	override fun onInitialize() {
