@@ -6,11 +6,12 @@ data class TriggerEvent(
 	val context: TikFinityContext,
 ) {
 	companion object {
-		private val LOGGER = LoggerFactory.getLogger(TriggerEvent::class.java)
+		const val MOD_ID: String = "my-tikfinity-http-client"
+		private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 	}
 
 	val type: Type = Type.fromId(context.triggerTypeId)
-
+	
 	operator fun invoke() {
 		when (type) {
 			Type.SHARE -> onShare()
@@ -49,18 +50,22 @@ data class TriggerEvent(
 
 	private fun onLikes() {
 		LOGGER.info("Trigger event: {}", Type.LIKES.name)
+		LOGGER.info("{}: {}", context.nickname, context.repeatCount)
 	}
 
 	private fun onFollow() {
 		LOGGER.info("Trigger event: {}", Type.FOLLOW.name)
+		LOGGER.info("Followed: {}", context.nickname)
 	}
 
 	private fun onSubscribe() {
 		LOGGER.info("Trigger event: {}", Type.SUBSCRIBE.name)
+		LOGGER.info("Subscribed: {}", context.nickname)
 	}
 
 	private fun onChat() {
 		LOGGER.info("Trigger event: {}", Type.CHAT.name)
+		LOGGER.info("{}: {}", context.nickname, context.commandParams)
 	}
 
 	private fun onEmote() {
