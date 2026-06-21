@@ -49,11 +49,21 @@ class TriggerEvent {
 	private fun onGiftMinimumCoins(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.GIFT_MINIMUM_COINS.name)
 		LOGGER.info("Gift: {} = {} * {}", context.nickname, context.giftName, context.repeatCount)
+		
+		context.commandParams?.let { text: String ->
+			val str = String.format("{}、{}個、ありがとうございます！", context.giftName, context.repeatCount)
+			voice.playText(str, FURINA_STYLE_NAME, furinaModelId, 12.5, 1.0)
+		}
 	}
 
 	private fun onGiftSpecific(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.GIFT_SPECIFIC.name)
 		LOGGER.info("GiftSpecific: {} = {} * {}", context.nickname, context.giftName, context.repeatCount)
+		
+		context.commandParams?.let { text: String ->
+			val str = String.format("{}、{}個、ありがとうございます！", context.giftName, context.repeatCount)
+			voice.playText(str, FURINA_STYLE_NAME, furinaModelId, 12.5, 1.0)
+		}
 	}
 
 	private fun onJoin(context: TikFinityContext) {
@@ -79,6 +89,10 @@ class TriggerEvent {
 	private fun onChat(context: TikFinityContext) {
 		LOGGER.info("Trigger event: {}", Type.CHAT.name)
 		LOGGER.info("Chat {}: {}", context.nickname, context.commandParams)
+		
+		context.commandParams?.let { text ->
+			voice.playText(text, NAHIDA_STYLE_NAME, nahidaModelId, 12.5, 1.0)
+		}
 	}
 
 	private fun onEmote(context: TikFinityContext) {
