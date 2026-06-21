@@ -10,6 +10,11 @@ import java.net.InetSocketAddress
 object MyTikFinityHttpClient : ModInitializer {
 	const val MOD_ID: String = "my-tikfinity-http-client"
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
+	
+	private const val HTTP_PORT = 8832
+	private const val ACTION_EXEC_PATH = "/api/features/actions/exec"
+	
+	private val httpClient: TikFinityClient
 
 	override fun onInitialize() {
 		
