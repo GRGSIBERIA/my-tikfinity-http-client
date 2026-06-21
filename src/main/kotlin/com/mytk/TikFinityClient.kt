@@ -18,7 +18,7 @@ class TikFinityClient {
     }
 
 	
-	private fun startHttpServer() {
+	fun startHttpServer() {
 		val server = HttpServer.create(InetSocketAddress(HTTP_PORT), 0)
 		server.createContext(ACTION_EXEC_PATH, ::handleActionExec)
 
@@ -30,7 +30,6 @@ class TikFinityClient {
 
 		LOGGER.info("HTTP server started on port {}", HTTP_PORT)
 	}
-	
 	
 
 	private fun handleActionExec(exchange: HttpExchange) {
