@@ -1,4 +1,4 @@
-package com.mytk.client
+package com.mytk
 
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer

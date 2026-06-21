@@ -6,6 +6,7 @@ import net.fabricmc.api.ModInitializer
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
 import java.net.InetSocketAddress
+import com.mytk.TikFinityClient
 
 object MyTikFinityHttpClient : ModInitializer {
 	const val MOD_ID: String = "my-tikfinity-http-client"
