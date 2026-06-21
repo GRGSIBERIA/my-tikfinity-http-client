@@ -1,16 +1,22 @@
 package com.mytk.client
 
 import org.slf4j.LoggerFactory
+import com.mytk.client.VoiceAPI
 
 data class TriggerEvent(
 	val context: TikFinityContext,
 ) {
 	companion object {
-		const val MOD_ID: String = "my-tikfinity-http-client"
+		private const val MOD_ID: String = "my-tikfinity-http-client"
 		private val LOGGER = LoggerFactory.getLogger(MOD_ID)
+		
+		private const val NAHIDA_STYLE_NAME = "nahida-style"
+		private const val FURINA_STYLE_NAME = "furina"
 	}
 
 	val type: Type = Type.fromId(context.triggerTypeId)
+	private val nahidaModelId: Int = -1
+	private val furinaModelId: Int = -1
 	
 	operator fun invoke() {
 		when (type) {
@@ -66,6 +72,10 @@ data class TriggerEvent(
 	private fun onChat() {
 		LOGGER.info("Trigger event: {}", Type.CHAT.name)
 		LOGGER.info("{}: {}", context.nickname, context.commandParams)
+		
+		val voice = VoiceAPI()
+		val js = voice.getModelsJson()
+		val modelId = voice.getModelId(js, "nahida")
 	}
 
 	private fun onEmote() {
