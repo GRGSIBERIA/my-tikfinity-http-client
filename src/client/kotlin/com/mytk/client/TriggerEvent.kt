@@ -90,7 +90,7 @@ class TriggerEvent {
 		LOGGER.info("Trigger event: {}", Type.CHAT.name)
 		LOGGER.info("Chat {}: {}", context.nickname, context.commandParams)
 		
-		context.commandParams?.let { text ->
+		context.commandParams?.let { text: String ->
 			voice.playText(text, NAHIDA_STYLE_NAME, nahidaModelId, 12.5, 1.0)
 		}
 	}
