@@ -11,6 +11,7 @@ import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
 import javax.sound.sampled.FloatControl
@@ -24,11 +25,13 @@ class VoiceAPI {
 		private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 		private const val MODELS_INFO_URL = "http://localhost:5000/models/info"
 		private const val VOICE_URL = "http://localhost:5000/voice"
+		private const val PLAYBACK_THREAD_COUNT = 24
 	}
 
 	private val httpClient = HttpClient.newHttpClient()
-	private val playbackExecutor = Executors.newSingleThreadExecutor { task ->
-		Thread(task, "$MOD_ID-voice-playback").apply {
+	private val playbackThreadNumber = AtomicInteger()
+	private val playbackExecutor = Executors.newFixedThreadPool(PLAYBACK_THREAD_COUNT) { task ->
+		Thread(task, "$MOD_ID-voice-playback-${playbackThreadNumber.incrementAndGet()}").apply {
 			isDaemon = true
 		}
 	}
