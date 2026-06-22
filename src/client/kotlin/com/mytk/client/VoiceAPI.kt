@@ -10,6 +10,8 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
 import javax.sound.sampled.FloatControl
@@ -23,9 +25,16 @@ class VoiceAPI {
 		private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 		private const val MODELS_INFO_URL = "http://localhost:5000/models/info"
 		private const val VOICE_URL = "http://localhost:5000/voice"
+		private const val PLAYBACK_THREAD_COUNT = 24
 	}
 
 	private val httpClient = HttpClient.newHttpClient()
+	private val playbackThreadNumber = AtomicInteger()
+	private val playbackExecutor = Executors.newFixedThreadPool(PLAYBACK_THREAD_COUNT) { task ->
+		Thread(task, "$MOD_ID-voice-playback-${playbackThreadNumber.incrementAndGet()}").apply {
+			isDaemon = true
+		}
+	}
 
 	fun getModelsJson(): JsonObject {
 		val request = HttpRequest.newBuilder()
@@ -60,7 +69,22 @@ class VoiceAPI {
 		volume: Double = 1.0,
 	) {
 		require(volume >= 0.0) { "Volume must be greater than or equal to 0" }
+		playbackExecutor.execute {
+			try {
+				requestAndPlayText(text, styleName, modelId, weight, volume)
+			} catch (e: Exception) {
+				LOGGER.error("Failed to request and play audio", e)
+			}
+		}
+	}
 
+	private fun requestAndPlayText(
+		text: String,
+		styleName: String,
+		modelId: Int,
+		weight: Double,
+		volume: Double,
+	) {
 		val query = listOf(
 			"text" to text,
 			"model_id" to modelId.toString(),
